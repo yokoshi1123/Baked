@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Imagawayaki = GameObject.Find("Dice");
         Imagawayaki = GameObject.Find("Imagawayaki");
         ImagawaPos = Imagawayaki.transform.position;
 

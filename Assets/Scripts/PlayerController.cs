@@ -35,12 +35,13 @@ public class PlayerController : MonoBehaviour
             {
                 startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth));
                 rb.AddForce(-1 * flipDir, ForceMode.Impulse);
-                rb.velocity = Vector3.zero;
                 Time.timeScale = 0.2f;
             }
 
             if (Input.GetMouseButtonUp(0))
             {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
                 //rb.angularVelocity = Vector3.zero;
                 endPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth));
                 //Debug.Log("Swiped from " + startPos + "to " + endPos);
@@ -51,25 +52,22 @@ public class PlayerController : MonoBehaviour
                 //flipDir = Quaternion.Inverse(transform.rotation) * flipDir;
                 flipDir.z = flipDir.y;
                 flipDir.y = 0;
-                Debug.Log(flipDir + ", magnitude:" + flipDir.magnitude);
+                //Debug.Log(flipDir + ", magnitude:" + flipDir.magnitude);
 
                 Time.timeScale = 1f;
                 //rb.isKinematic = false;
                 rb.AddForce(flipDir, ForceMode.Impulse);
-                rb.AddForce(Vector3.up * flipDir.magnitude, ForceMode.Impulse);
-
-                //Debug.Log(Quaternion.FromToRotation(transform.forward, flipDir));
-                //transform.rotation *= Quaternion.FromToRotation(transform.forward, flipDir);
+                rb.AddForce(Vector3.up * flipDir.magnitude * 2, ForceMode.Impulse);
 
                 if (flipDir.magnitude > 0.01f)
                 {
                     // 前方ベクトルに対する移動方向の角度を計算
-                    float angle = Vector3.SignedAngle(transform.up, flipDir, transform.forward);
+                    //float angle = Vector3.SignedAngle(Vector3.up, transform.position + flipDir, new Vector3(flipDir.z, 0, -flipDir.x));
+                    //Debug.Log("angle : " + angle);
 
                     // X軸（ピッチ）回転のトルクを加える
-                    rb.AddTorque(Quaternion.Inverse(transform.rotation) * transform.right * angle * torqueForce);
+                    rb.AddTorque(new Vector3(flipDir.z, 0, -flipDir.x) * torqueForce);
                 }
-                rb.AddTorque(flipDir * 3600, ForceMode.Impulse);
                 flipCount++;
             }
 

@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
+    [SerializeField] private float moveableScreenHeight = 0.6f;
+    private bool MouseButtonDown = false;
+    private Vector3 touchPos = Vector3.zero;
+
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
 
@@ -31,15 +35,23 @@ public class PlayerController : MonoBehaviour
     {
         if (Application.isEditor) // && flipCount < 2)
         {
-            if (Input.GetMouseButtonDown(0))
+            touchPos = Input.mousePosition;
+            //Debug.Log("touchPos:" + touchPos);
+            //Debug.Log("Screen  height: " + Screen.height);
+
+       
+            
+            if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
             {
+                MouseButtonDown = true;
                 startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth));
                 rb.AddForce(-1 * flipDir, ForceMode.Impulse);
                 Time.timeScale = 0.2f;
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && MouseButtonDown)
             {
+                MouseButtonDown = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 //rb.angularVelocity = Vector3.zero;
@@ -70,6 +82,7 @@ public class PlayerController : MonoBehaviour
                 }
                 flipCount++;
             }
+            
 
 
             //if (Input.GetKeyDown(KeyCode.W))
@@ -118,5 +131,10 @@ public class PlayerController : MonoBehaviour
     public void SetFlipCount(int value)
     {
         flipCount = value;
+    }
+
+    public float GetmoveableScreenHeight()
+    {
+        return moveableScreenHeight;
     }
 }

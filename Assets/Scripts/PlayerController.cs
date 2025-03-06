@@ -33,30 +33,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Application.isEditor) // && flipCount < 2)
+        if (Application.isEditor && flipCount < 2)
         {
-            touchPos = Input.mousePosition;
-            //Debug.Log("touchPos:" + touchPos);
-            //Debug.Log("Screen  height: " + Screen.height);
-
-       
-            
-            if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
+            if (Input.GetMouseButtonDown(0))
             {
-                MouseButtonDown = true;
-                startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth));
-                rb.AddForce(-1 * flipDir, ForceMode.Impulse);
+                startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 Time.timeScale = 0.2f;
             }
 
-            if (Input.GetMouseButtonUp(0) && MouseButtonDown)
+            if (Input.GetMouseButtonUp(0))
             {
-                MouseButtonDown = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 //rb.angularVelocity = Vector3.zero;
-                endPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth));
-                //Debug.Log("Swiped from " + startPos + "to " + endPos);
+                endPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                //Debug.Log("End: " + Input.mousePosition);
+                Debug.Log("From " + startPos + " to " + endPos);
 
                 flipDir = (endPos - startPos) * 5;
                 //Debug.Log("1:" + flipDir);
@@ -64,12 +56,12 @@ public class PlayerController : MonoBehaviour
                 //flipDir = Quaternion.Inverse(transform.rotation) * flipDir;
                 flipDir.z = flipDir.y;
                 flipDir.y = 0;
-                //Debug.Log(flipDir + ", magnitude:" + flipDir.magnitude);
+                Debug.Log("flipDir: " + flipDir + ", magnitude: " + flipDir.magnitude);
 
                 Time.timeScale = 1f;
                 //rb.isKinematic = false;
                 rb.AddForce(flipDir, ForceMode.Impulse);
-                rb.AddForce(Vector3.up * flipDir.magnitude * 2, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 4f, 16f), ForceMode.Impulse);
 
                 if (flipDir.magnitude > 0.01f)
                 {

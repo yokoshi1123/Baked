@@ -10,7 +10,7 @@ public class LandingChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GameObject.Find("Imagawayaki").GetComponent<Rigidbody>();
+        rb = transform.parent.GetComponent<Rigidbody>();
         playerController = transform.parent.GetComponent<PlayerController>();
     }
 
@@ -22,8 +22,8 @@ public class LandingChecker : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Landed");
-        if (rb.velocity.y <= -0.1f)
+        //Debug.Log(gameObject.name + " : Landed");
+        if (rb.velocity.y <= 0)
         {
             playerController.SetFlipCount(0);
         }

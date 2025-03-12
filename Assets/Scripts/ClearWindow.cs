@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,11 @@ public class ClearWindow : MonoBehaviour
     [SerializeField] private GameObject nextStage;
 
     [SerializeField] private int stageUnlock;
+
+    private int maxScore = 9999;
+    private BestBeforeDateGauge gauge;
+    private int myScore;
+    [SerializeField] private TextMeshProUGUI score;
     
     // Start is called before the first frame update
     void Start()
@@ -31,6 +37,9 @@ public class ClearWindow : MonoBehaviour
         Debug.Log("Beta");
 
         // ゲージから点数を反映するコードをここに書く
+        gauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
+        myScore = gauge.GetScore();
+        score.text = myScore.ToString();
     }
 
     // Update is called once per frame

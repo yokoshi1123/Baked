@@ -790,6 +790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextStage: {fileID: 3615065988781192741}
   stageUnlock: 0
+  score: {fileID: 3615065989254870041}
 --- !u!1 &3615065989854970418
 GameObject:
   m_ObjectHideFlags: 0

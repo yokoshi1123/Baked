@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    [SerializeField] private float moveableScreenHeight = 0.6f;
+    [SerializeField] private float moveableScreenHeight = 0.7f;
     private bool MouseButtonDown = false;
     private Vector3 touchPos = Vector3.zero;
 
@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int flipCount = 0;
 
+    
+    private bool buttonDown = false;//マウスが押されているか確認用
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,16 +37,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Application.isEditor && flipCount < 2)
+        if (Application.isEditor && flipCount < 2 )
         {
-            if (Input.GetMouseButtonDown(0))
+            touchPos = Input.mousePosition;
+            if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
             {
                 startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 Time.timeScale = 0.2f;
+                buttonDown = true;
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (buttonDown && (Input.GetMouseButtonUp(0) || touchPos.y >= Screen.height * moveableScreenHeight))
             {
+                buttonDown = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 //rb.angularVelocity = Vector3.zero;
@@ -74,6 +81,8 @@ public class PlayerController : MonoBehaviour
                 }
                 flipCount++;
             }
+
+            
             
 
 

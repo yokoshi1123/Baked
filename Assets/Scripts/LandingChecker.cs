@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LandingChecker : MonoBehaviour
 {
@@ -23,9 +24,14 @@ public class LandingChecker : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //Debug.Log(gameObject.name + " : Landed");
-        if (rb.velocity.y <= 0)
+        if (other.CompareTag("Stage") && rb.velocity.y <= 0)
         {
             playerController.SetFlipCount(0);
+        }
+
+        if (other.CompareTag("Abyss")) // —Ž‚¿‚½‚çƒŠƒZƒbƒg
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

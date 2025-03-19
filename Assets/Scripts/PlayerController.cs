@@ -27,11 +27,13 @@ public class PlayerController : MonoBehaviour
     
     private bool buttonDown = false;//マウスが押されているか確認用
 
+    private Vector3 mainCameraRot;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = /*transform.GetChild(0).*/GetComponent<Rigidbody>();   
+        rb = /*transform.GetChild(0).*/GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
             touchPos = Input.mousePosition;
             if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
             {
+                //Debug.Log("From " + Input.mousePosition);
                 startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 Time.timeScale = 0.2f;
                 buttonDown = true;
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
             if (buttonDown && (Input.GetMouseButtonUp(0) || touchPos.y >= Screen.height * moveableScreenHeight))
             {
+                //Debug.Log("To " + Input.mousePosition);
                 buttonDown = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
@@ -63,7 +67,9 @@ public class PlayerController : MonoBehaviour
                 //flipDir = Quaternion.Inverse(transform.rotation) * flipDir;
                 flipDir.z = flipDir.y;
                 flipDir.y = 0;
-                Debug.Log("flipDir: " + flipDir + ", magnitude: " + flipDir.magnitude);
+                flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
+                //Debug.Log(Camera.main.transform.rotation.eulerAngles.y);
+                //Debug.Log("flipDir: " + flipDir + ", magnitude: " + flipDir.magnitude);
 
                 Time.timeScale = 1f;
                 //rb.isKinematic = false;

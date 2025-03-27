@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
             {
                 //Debug.Log("From " + Input.mousePosition);
-                startPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                startPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 Time.timeScale = 0.2f;
                 buttonDown = true;
             }
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 //rb.angularVelocity = Vector3.zero;
-                endPos = Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                endPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 //Debug.Log("End: " + Input.mousePosition);
                 Debug.Log("From " + startPos + " to " + endPos);
 

@@ -22,26 +22,30 @@ public class ClearWindow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
-        if (SceneManager.GetActiveScene().name == "Stage" + stageUnlock.ToString()) // 解放されている最終ステージ
+        if (this.gameObject.name == "ClearWindow")
         {
-            PlayerPrefs.SetInt("StageUnlock", Mathf.Min(stageUnlock + 1, STAGE_MAX_NUM));
-            Debug.Log("Alpha");
+             /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
+            if (SceneManager.GetActiveScene().name == "Stage" + stageUnlock.ToString()) // 解放されている最終ステージ
+            {
+                PlayerPrefs.SetInt("StageUnlock", Mathf.Min(stageUnlock + 1, STAGE_MAX_NUM));
+                Debug.Log("Alpha");
+            }
+
+            if (SceneManager.GetActiveScene().name == "Stage" + STAGE_MAX_NUM.ToString())
+            {
+                nextStage.GetComponent<Button>().interactable = false;
+            }
+
+            Debug.Log("Beta");
+
+            // ゲージから点数を反映するコードをここに書く
+            gauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
+            gauge.SetIsWorking(false);
+            myScore = gauge.GetScore();
+            score.text = myScore.ToString();
+            Time.timeScale = 0;
         }
-
-        if (SceneManager.GetActiveScene().name == "Stage" + STAGE_MAX_NUM.ToString())
-        {
-            nextStage.GetComponent<Button>().interactable = false;
-        }
-
-        Debug.Log("Beta");
-
-        // ゲージから点数を反映するコードをここに書く
-        gauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
-        gauge.SetIsWorking(false);
-        myScore = gauge.GetScore();
-        score.text = myScore.ToString();
-        Time.timeScale = 0;
+        
     }
 
     // Update is called once per frame

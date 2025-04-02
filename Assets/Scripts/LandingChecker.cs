@@ -9,18 +9,30 @@ public class LandingChecker : MonoBehaviour
     private PlayerController playerController;
     private BestBeforeDateGauge bbDateGauge;
 
+    private Vector3 firstPos;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = transform.parent.GetComponent<Rigidbody>();
         playerController = transform.parent.GetComponent<PlayerController>();
         bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
+
+        firstPos = rb.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void Respawn()
+    {
+        rb.velocity = Vector3.zero;
+        rb.gameObject.transform.rotation = Quaternion.identity;
+        rb.position = firstPos;
+        bbDateGauge.DecreaseGauge(0.1f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -33,7 +45,8 @@ public class LandingChecker : MonoBehaviour
 
         if (other.CompareTag("Abyss")) // —Ž‚¿‚½‚çƒŠƒZƒbƒg
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Respawn();
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class BestBeforeDateGauge : MonoBehaviour
 {
     private Slider gauge;
+    private PlayerController playerController;
+    private GameObject gameoverWindow;
     
     [SerializeField] private float gaugeMaxValue;
     [SerializeField] private float gaugeDicreaseSpeed;
@@ -18,6 +20,10 @@ public class BestBeforeDateGauge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameoverWindow = GameObject.Find("GameoverWindow");
+        gameoverWindow.SetActive(false);
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
         Application.targetFrameRate = 60;
 
         gaugeMaxValue = 180f * 60;
@@ -37,6 +43,12 @@ public class BestBeforeDateGauge : MonoBehaviour
             gauge.value -= gaugeDicreaseSpeed;
         }
 
+        if (gauge.value <= 0 && isWorking)
+        {
+            playerController.SetCanMove(false);
+            gameoverWindow.SetActive(true);
+        }
+
 
         if (Input.GetKey(KeyCode.R))
         {
@@ -53,5 +65,10 @@ public class BestBeforeDateGauge : MonoBehaviour
     public void SetIsWorking(bool value)
     {
         isWorking = value;
+    }
+
+    public void DecreaseGauge(float value)
+    {
+        gauge.value -= gaugeMaxValue * value;
     }
 }

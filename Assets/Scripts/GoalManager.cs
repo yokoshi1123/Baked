@@ -23,9 +23,9 @@ public class GoalManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            clearWindow.SetActive(true);
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            player.GetComponent<PlayerController>().SetFlipCount(2);
+            player.GetComponent<PlayerController>().SetCanMove(false);
+            clearWindow.SetActive(true);
         }
     }
 }

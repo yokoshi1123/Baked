@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
+
+public class SoundVolumeManager : MonoBehaviour
+{
+    [SerializeField]
+    private int bgmVolume;
+    [SerializeField] 
+    private int seVolume;
+
+    private Slider BGMVolumeSlider;
+    private Slider SEVolumeSlider;
+
+    private TextMeshProUGUI BGMValue;
+    private TextMeshProUGUI SEValue;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        BGMVolumeSlider = GameObject.Find("BGMVolume").GetComponent<Slider>();
+        SEVolumeSlider = GameObject.Find("SEVolume").GetComponent<Slider>();
+
+        bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 80);
+        seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 80);
+        BGMVolumeSlider.value = bgmVolume * 0.01f;
+        SEVolumeSlider.value = seVolume * 0.01f;
+
+        BGMValue = BGMVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        SEValue = SEVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+
+        BGMValue.text = bgmVolume.ToString();
+        SEValue.text = seVolume.ToString();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 80);
+        seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 80);
+
+        BGMValue.text = bgmVolume.ToString();
+        SEValue.text = seVolume.ToString();
+    }
+
+    public void SetBGMVolumeSlider()
+    {
+        PlayerPrefs.SetInt("BGMVolumeSlider", (int)(BGMVolumeSlider.value * 100));
+    }
+    public void SetSEVolumeSlider()
+    {
+        PlayerPrefs.SetInt("SEVolumeSlider", (int)(SEVolumeSlider.value * 100));
+    }
+}

@@ -7,12 +7,14 @@ public class LandingChecker : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerController playerController;
+    private BestBeforeDateGauge bbDateGauge;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = transform.parent.GetComponent<Rigidbody>();
         playerController = transform.parent.GetComponent<PlayerController>();
+        bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
     }
 
     // Update is called once per frame

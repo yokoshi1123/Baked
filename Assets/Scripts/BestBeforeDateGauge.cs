@@ -13,6 +13,8 @@ public class BestBeforeDateGauge : MonoBehaviour
 
     [SerializeField] private int maxScore = 5000;
 
+    private bool isWorking = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +26,13 @@ public class BestBeforeDateGauge : MonoBehaviour
         gauge = GetComponent<Slider>();
         gauge.maxValue = gaugeMaxValue;
         gauge.value = gaugeMaxValue;
+        isWorking = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gauge.value > 0)
+        if (gauge.value > 0 && isWorking)
         {
             gauge.value -= gaugeDicreaseSpeed;
         }
@@ -45,5 +48,10 @@ public class BestBeforeDateGauge : MonoBehaviour
     public int GetScore()
     {
         return (int)(maxScore * gauge.normalizedValue);
+    }
+
+    public void SetIsWorking(bool value)
+    {
+        isWorking = value;
     }
 }

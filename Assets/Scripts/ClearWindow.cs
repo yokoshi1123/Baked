@@ -14,7 +14,7 @@ public class ClearWindow : MonoBehaviour
 
     [SerializeField] private int stageUnlock;
 
-    private int maxScore = 9999;
+    //private int maxScore = 9999;
     private BestBeforeDateGauge gauge;
     private int myScore;
     [SerializeField] private TextMeshProUGUI score;
@@ -38,8 +38,10 @@ public class ClearWindow : MonoBehaviour
 
         // ゲージから点数を反映するコードをここに書く
         gauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
+        gauge.SetIsWorking(false);
         myScore = gauge.GetScore();
         score.text = myScore.ToString();
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -50,6 +52,7 @@ public class ClearWindow : MonoBehaviour
 
     public void NextStage()
     {
+        Time.timeScale = 1;
         Debug.Log("Next Stage");
         /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
         SceneManager.LoadScene("Stage" + stageUnlock);
@@ -57,12 +60,14 @@ public class ClearWindow : MonoBehaviour
 
     public void RetryStage()
     {
+        Time.timeScale = 1;
         Debug.Log("Retry");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void GotoStageSelect()
+    public void GoToStageSelect()
     {
+        Time.timeScale = 1;
         Debug.Log("Stage Select");
         SceneManager.LoadScene("StageSelect");
     }

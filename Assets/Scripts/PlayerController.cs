@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] private float moveableScreenHeight = 0.7f;
-    private bool MouseButtonDown = false;
+    //private bool MouseButtonDown = false;
     private Vector3 touchPos = Vector3.zero;
 
     private Vector3 startPos = Vector3.zero;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private float cameraDepth = 0.45f;
 
-    [SerializeField] private float mag = 10f;
+    //[SerializeField] private float mag = 10f;
 
     private float torqueForce = 720f;
 
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 mainCameraRot;
 
+    [SerializeField] private bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Application.isEditor && flipCount < 2 )
+        if (Application.isEditor && flipCount < 2 && canMove)
         {
             touchPos = Input.mousePosition;
             if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
@@ -143,5 +144,14 @@ public class PlayerController : MonoBehaviour
     public float GetmoveableScreenHeight()
     {
         return moveableScreenHeight;
+    }
+    public bool GetCanMove()
+    {
+        return canMove;
+    }
+
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
     }
 }

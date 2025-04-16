@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject Imagawayaki;
-    private Vector3 ImagawaPos;
+    private GameObject player;
+    private Vector3 playerPos;
     private PlayerController playerController;
     private Vector3 touchPos = Vector3.zero;
 
@@ -14,10 +14,14 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Imagawayaki = GameObject.Find("Dice");
-        Imagawayaki = GameObject.Find("Imagawayaki");
-        ImagawaPos = Imagawayaki.transform.position;
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        //player = GameObject.Find("Dice");
+        player = GameObject.Find("Player");
+        playerPos = player.transform.position;
+        playerController = player.GetComponent<PlayerController>();
+
+        //カメラの初期位置
+        transform.position = playerPos + new Vector3(0, 0.537f, -0.771f);
+        transform.localEulerAngles = player.transform.localEulerAngles + new Vector3(20,0,0);
     }
 
     // Update is called once per frame
@@ -26,8 +30,8 @@ public class CameraController : MonoBehaviour
         touchPos = Input.mousePosition;
 
         // targetの移動量分、自分（カメラ）も移動する
-        transform.position += Imagawayaki.transform.position - ImagawaPos;
-        ImagawaPos = Imagawayaki.transform.position;
+        transform.position += player.transform.position - playerPos;
+        playerPos = player.transform.position;
 
         canMove = playerController.GetCanMove();
 
@@ -37,7 +41,7 @@ public class CameraController : MonoBehaviour
             // マウスの移動量
             float mouseInputX = Input.GetAxis("Mouse X");
             // targetの位置のY軸を中心に、回転（公転）する
-            transform.RotateAround(ImagawaPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+            transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
 
         }
     }

@@ -11,6 +11,8 @@ public class LandingChecker : MonoBehaviour
 
     private Vector3 firstPos;
 
+    private bool isAbyss = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +31,13 @@ public class LandingChecker : MonoBehaviour
 
     private void Respawn()
     {
+        isAbyss = true;
         rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         rb.gameObject.transform.rotation = Quaternion.identity;
         rb.position = firstPos;
         bbDateGauge.DecreaseGauge(0.1f);
+        isAbyss = false;
     }
 
     private void OnTriggerStay(Collider other)
@@ -46,6 +51,7 @@ public class LandingChecker : MonoBehaviour
         if (other.CompareTag("Abyss")) // —Ž‚¿‚½‚çƒŠƒZƒbƒg
         {
             Respawn();
+            Debug.Log("Fell");
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

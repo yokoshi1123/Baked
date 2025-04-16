@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
                 //rb.angularVelocity = Vector3.zero;
                 endPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
                 //Debug.Log("End: " + Input.mousePosition);
-                Debug.Log("From " + startPos + " to " + endPos);
+                //Debug.Log("From " + startPos + " to " + endPos);
 
                 flipDir = (endPos - startPos) * 5;
                 //Debug.Log("1:" + flipDir);
@@ -131,6 +131,11 @@ public class PlayerController : MonoBehaviour
             //{
             //    rb.AddForce(Vector3.down * mag, ForceMode.Impulse);
             //}
+        }
+
+        if (!canMove)
+        {
+            Debug.Log("Test");
         }
 
         //transform.position = rb.position;

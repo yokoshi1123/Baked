@@ -15,36 +15,36 @@ public class ClearWindow : MonoBehaviour
     [SerializeField] private int stageUnlock;
 
     //private int maxScore = 9999;
-    private BestBeforeDateGauge gauge;
+    private BestBeforeDateGauge bbDateGauge;
     private int myScore;
     [SerializeField] private TextMeshProUGUI score;
     
     // Start is called before the first frame update
     void Start()
     {
-        if (this.gameObject.name == "ClearWindow")
+        //if (this.gameObject.name == "ClearWindow")
+        //{
+        /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
+        if (SceneManager.GetActiveScene().name == "Stage" + stageUnlock.ToString()) // 解放されている最終ステージ
         {
-             /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
-            if (SceneManager.GetActiveScene().name == "Stage" + stageUnlock.ToString()) // 解放されている最終ステージ
-            {
-                PlayerPrefs.SetInt("StageUnlock", Mathf.Min(stageUnlock + 1, STAGE_MAX_NUM));
-                Debug.Log("Alpha");
-            }
-
-            if (SceneManager.GetActiveScene().name == "Stage" + STAGE_MAX_NUM.ToString())
-            {
-                nextStage.GetComponent<Button>().interactable = false;
-            }
-
-            Debug.Log("Beta");
-
-            // ゲージから点数を反映するコードをここに書く
-            gauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
-            gauge.SetIsWorking(false);
-            myScore = gauge.GetScore();
-            score.text = myScore.ToString();
-            Time.timeScale = 0;
+            PlayerPrefs.SetInt("StageUnlock", Mathf.Min(stageUnlock + 1, STAGE_MAX_NUM));
+            //Debug.Log("Alpha");
         }
+
+        if (SceneManager.GetActiveScene().name == "Stage" + STAGE_MAX_NUM.ToString())
+        {
+            nextStage.GetComponent<Button>().interactable = false;
+        }
+
+        //Debug.Log("Beta");
+
+        // ゲージから点数を反映するコードをここに書く
+        bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
+        bbDateGauge.SetIsWorking(false);
+        myScore = bbDateGauge.GetScore();
+        score.text = myScore.ToString();
+        Time.timeScale = 0;
+        //}
         
     }
 

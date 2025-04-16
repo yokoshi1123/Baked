@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    //[SerializeField] private GameObject player;
     [SerializeField] private GameObject clearWindow;
 
     // Start is called before the first frame update
@@ -23,8 +23,8 @@ public class GoalManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            player.GetComponent<PlayerController>().SetCanMove(false);
+           /* player*/collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            /*player*/collision.gameObject.GetComponent<PlayerController>().SetCanMove(false);
             clearWindow.SetActive(true);
         }
     }

@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private PlayerController playerController;
     private Vector3 touchPos = Vector3.zero;
 
-    private bool canMove;
+    [SerializeField] private bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +27,19 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        touchPos = Input.mousePosition;
-
-        // targetの移動量分、自分（カメラ）も移動する
-        transform.position += player.transform.position - playerPos;
-        playerPos = player.transform.position;
-
         canMove = playerController.GetCanMove();
 
+        if (canMove)
+        {
+            touchPos = Input.mousePosition;
+
+            // targetの移動量分、自分（カメラ）も移動する
+            transform.position += player.transform.position - playerPos;
+            playerPos = player.transform.position;
+        }
+        
         // マウスの右クリックを押している間
-        if (Input.GetMouseButton(0) && touchPos.y >= Screen.height * playerController.GetmoveableScreenHeight() && canMove)
+        if (canMove && Input.GetMouseButton(0) && (touchPos.y >= Screen.height * playerController.GetmoveableScreenHeight()))
         {
             // マウスの移動量
             float mouseInputX = Input.GetAxis("Mouse X");

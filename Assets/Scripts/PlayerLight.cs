@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class PlayerLight : MonoBehaviour
 {
-    private GameObject Imagawayaki;
-    private Vector3 ImagawaPos;
+    private Transform playerTra;
+    Vector3 offsetPos = new(0, 0.535f, 0);
+    Quaternion offsetRot = Quaternion.Euler(90, 0, 0);
 
     // Start is called before the first frame update
     void Start()
     {
-        //Imagawayaki = GameObject.Find("Dice");
-        Imagawayaki = GameObject.Find("Imagawayaki");
-        ImagawaPos = Imagawayaki.transform.position;
-
+        playerTra = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // targetの移動量分、自分（カメラ）も移動する
-        transform.position += Imagawayaki.transform.position - ImagawaPos;
-        ImagawaPos = Imagawayaki.transform.position;
-
+        transform.position = offsetPos + playerTra.position;
+        transform.rotation = offsetRot * Quaternion.identity;
     }
 }

@@ -7,6 +7,7 @@ public class OptionWindow : MonoBehaviour
 {
     private Animator optionWindow;
     private PlayerController playerController;
+    private BestBeforeDateGauge bbDateGauge;
 
     private bool isOpen = false;
 
@@ -17,6 +18,7 @@ public class OptionWindow : MonoBehaviour
     {
         optionWindow = GetComponent<Animator>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
         howToPlay = transform.GetChild(2).gameObject;
     }
 
@@ -24,6 +26,7 @@ public class OptionWindow : MonoBehaviour
     void Update()
     {
         playerController.SetCanMove(!isOpen);
+        bbDateGauge.SetIsWorking(!isOpen);
     }
 
     public void RetryStage()

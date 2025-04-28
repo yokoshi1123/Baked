@@ -159,4 +159,9 @@ public class PlayerController : MonoBehaviour
     {
         canMove = value;
     }
+
+    public void SwitchCanMove()
+    {
+        canMove = !canMove;
+    }
 }

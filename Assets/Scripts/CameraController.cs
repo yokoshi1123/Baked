@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private PlayerController playerController;
     private Vector3 touchPos = Vector3.zero;
 
-    [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canMove = false;
 
     // Start is called before the first frame update
     void Start()

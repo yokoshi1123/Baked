@@ -25,8 +25,8 @@ public class OptionWindow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerController.SetCanMove(!isOpen);
-        bbDateGauge.SetIsWorking(!isOpen);
+        //playerController.SetCanMove(!isOpen);
+        //bbDateGauge.SetIsWorking(!isOpen);
     }
 
     public void RetryStage()
@@ -52,5 +52,11 @@ public class OptionWindow : MonoBehaviour
     {
         isOpen = !isOpen;
         optionWindow.SetBool("isOpen", isOpen);
+    }
+
+    public void SwitchCanMove()
+    {
+        playerController.SwitchCanMove();
+        bbDateGauge.SwitchIsWorking();
     }
 }

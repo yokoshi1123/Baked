@@ -50,16 +50,21 @@ public class BestBeforeDateGauge : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.R))
-        {
-            gauge.maxValue = gaugeMaxValue; 
-            gauge.value = gaugeMaxValue;
-        }
+        //if (Input.GetKey(KeyCode.R))
+        //{
+        //    gauge.maxValue = gaugeMaxValue; 
+        //    gauge.value = gaugeMaxValue;
+        //}
     }
 
     public int GetScore()
     {
         return (int)(maxScore * gauge.normalizedValue);
+    }
+
+    public void SwitchIsWorking()
+    {
+        isWorking = !isWorking;
     }
 
     public void SetIsWorking(bool value)

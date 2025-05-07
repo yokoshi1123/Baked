@@ -24,7 +24,6 @@ public class RespawnController : MonoBehaviour
         rb = transform.parent.GetComponent<Rigidbody>();
         playerController = transform.parent.GetComponent<PlayerController>();
         bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
-        checkPoints = GameObject.Find("CheckPoints");
 
         respawnIndx = 0;
         respawnPos = rb.transform.position;

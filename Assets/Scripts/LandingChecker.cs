@@ -29,7 +29,7 @@ public class LandingChecker : MonoBehaviour
         
     }
 
-    private void Respawn()
+    /*private void Respawn()
     {
         isAbyss = true;
         rb.velocity = Vector3.zero;
@@ -38,7 +38,7 @@ public class LandingChecker : MonoBehaviour
         rb.position = firstPos;
         bbDateGauge.DecreaseGauge(0.1f);
         isAbyss = false;
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
@@ -48,11 +48,11 @@ public class LandingChecker : MonoBehaviour
             playerController.SetFlipCount(0);
         }
 
-        if (other.CompareTag("Abyss")) // 落ちたらリセット
+        /*if (other.CompareTag("Abyss")) // 落ちたらリセット
         {
             Respawn();
             Debug.Log("Fell");
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        }*/
     }
 }

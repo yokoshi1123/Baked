@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -39,13 +40,27 @@ public class CameraController : MonoBehaviour
         }
         
         // マウスの右クリックを押している間
-        if (canMove && Input.GetMouseButton(0) && (touchPos.y >= Screen.height * playerController.GetmoveableScreenHeight()))
+        if (Application.isEditor && canMove)
         {
-            // マウスの移動量
-            float mouseInputX = Input.GetAxis("Mouse X");
-            // targetの位置のY軸を中心に、回転（公転）する
-            transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+            if (Input.GetMouseButton(0) && (touchPos.y >= Screen.height * playerController.GetmovableScreenHeight()))
+            {
+                // マウスの移動量
+                float mouseInputX = Input.GetAxis("Mouse X");
+                // targetの位置のY軸を中心に、回転（公転）する
+                transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
 
+            }
+        }
+        else if (Input.touchCount > 0 && canMove)
+        {
+            Touch touch = Input.GetTouch(0);
+            touchPos = touch.position;
+            if (touch.phase == TouchPhase.Moved && touchPos.y >= Screen.height * playerController.GetmovableScreenHeight())
+            {
+                // targetの位置のY軸を中心に、回転（公転）する
+                transform.RotateAround(playerPos, Vector3.up, touch.deltaPosition.x * Time.deltaTime * 200f);
+
+            }
         }
     }
 }

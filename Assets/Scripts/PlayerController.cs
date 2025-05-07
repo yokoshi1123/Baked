@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    [SerializeField] private float moveableScreenHeight = 0.7f;
+    [SerializeField] private float movableScreenHeight = 0.7f;
     //private bool MouseButtonDown = false;
     private Vector3 touchPos = Vector3.zero;
 
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         if (Application.isEditor && flipCount < 2 && canMove)
         {
             touchPos = Input.mousePosition;
-            if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * moveableScreenHeight)
+            if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * movableScreenHeight)
             {
                 //Debug.Log("From " + Input.mousePosition);
                 startPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
                 buttonDown = true;
             }
 
-            if (buttonDown && (Input.GetMouseButtonUp(0) || touchPos.y >= Screen.height * moveableScreenHeight))
+            if (buttonDown && (Input.GetMouseButtonUp(0) || touchPos.y >= Screen.height * movableScreenHeight))
             {
                 //Debug.Log("To " + Input.mousePosition);
                 buttonDown = false;
@@ -132,10 +132,47 @@ public class PlayerController : MonoBehaviour
             //    rb.AddForce(Vector3.down * mag, ForceMode.Impulse);
             //}
         }
+        else if (flipCount < 2 && canMove)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                touchPos = touch.position;
+                if (touch.phase == TouchPhase.Began && touchPos.y < Screen.height * movableScreenHeight)
+                {
+                    startPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
+                    Time.timeScale = 0.2f;
+                    buttonDown = true;
+                }
+                if (buttonDown && (touch.phase == TouchPhase.Ended || touchPos.y >= Screen.height * movableScreenHeight))
+                {
+                    buttonDown = false;
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    endPos = Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
+                    flipDir = (endPos - startPos) * 5;
+                    flipDir.z = flipDir.y;
+                    flipDir.y = 0;
+                    flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
+                    Time.timeScale = 1f;
+                    //rb.isKinematic = false;
+                    rb.AddForce(flipDir, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 4f, 16f), ForceMode.Impulse);
+
+                    if (flipDir.magnitude > 0.01f)
+                    {
+                        // X軸（ピッチ）回転のトルクを加える
+                        rb.AddTorque(new Vector3(flipDir.z, 0, -flipDir.x) * torqueForce);
+                    }
+                    flipCount++;
+                }
+            }
+        }
 
         if (!canMove)
         {
-            Debug.Log("Test");
+            Debug.Log("Unavailable");
         }
 
         //transform.position = rb.position;
@@ -146,9 +183,9 @@ public class PlayerController : MonoBehaviour
         flipCount = value;
     }
 
-    public float GetmoveableScreenHeight()
+    public float GetmovableScreenHeight()
     {
-        return moveableScreenHeight;
+        return movableScreenHeight;
     }
     public bool GetCanMove()
     {

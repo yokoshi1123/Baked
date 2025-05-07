@@ -26,7 +26,7 @@ public class BestBeforeDateGauge : MonoBehaviour
 
         Application.targetFrameRate = 60;
 
-        gaugeMaxValue = 180f * 60;
+        gaugeMaxValue = 180f * 180;
         gaugeDicreaseSpeed = 1f;
 
         gauge = GetComponent<Slider>();

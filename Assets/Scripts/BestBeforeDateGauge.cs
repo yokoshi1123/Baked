@@ -59,7 +59,20 @@ public class BestBeforeDateGauge : MonoBehaviour
 
     public int GetScore()
     {
-        return (int)(maxScore * gauge.normalizedValue);
+        if(gauge != null)
+        {
+            return (int)(maxScore * gauge.normalizedValue);
+        }
+        else
+        {
+            Debug.Log("‚È‚ñ‚©Null");
+            return -1;
+        }
+    }
+
+    public int GetMaxScore()
+    {
+        return maxScore;
     }
 
     public void SwitchIsWorking()

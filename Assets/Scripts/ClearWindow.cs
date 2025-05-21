@@ -18,6 +18,8 @@ public class ClearWindow : MonoBehaviour
     private BestBeforeDateGauge bbDateGauge;
     private int myScore;
     [SerializeField] private TextMeshProUGUI score;
+
+    private ScoreManager scoreManager;
     
     // Start is called before the first frame update
     void Start()
@@ -41,8 +43,25 @@ public class ClearWindow : MonoBehaviour
         // ゲージから点数を反映するコードをここに書く
         bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
         bbDateGauge.SetIsWorking(false);
-        myScore = bbDateGauge.GetScore();
-        score.text = myScore.ToString();
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        myScore = scoreManager.GetGaugeScore();
+        switch (myScore)
+        {
+            case 0:
+                score.text = "これ賞味期限\n大丈夫？";
+                break;
+            case 1:
+                score.text = "お粗末様でした。";
+                break;
+            case 2:
+                score.text = "非常においしく\nいただけました。";
+                break;
+            default:
+                score.text = "ScoreError";
+                break;
+        }
+         
+        //score.text = myScore.ToString();
         Time.timeScale = 0;
         //}
         

@@ -22,8 +22,8 @@ public class Coin : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            coinsController.GotCoinNumInc();
-            this.gameObject.SetActive(false);
+            coinsController.GotCoinNumInc();//GotCoinNumをインクリメント
+            this.gameObject.SetActive(false);//当たったコインは消える
         }
     }
 }

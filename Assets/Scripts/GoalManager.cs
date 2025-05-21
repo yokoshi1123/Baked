@@ -25,7 +25,8 @@ public class GoalManager : MonoBehaviour
         {
            /* player*/collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             /*player*/collision.gameObject.GetComponent<PlayerController>().SetCanMove(false);
-            clearWindow.SetActive(true);
+            clearWindow.SetActive(true);//クリアウィンドウ表示
+            Debug.Log("PlayerGoal");
         }
     }
 }

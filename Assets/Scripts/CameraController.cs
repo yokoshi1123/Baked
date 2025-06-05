@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 10f;
 
     //private List<Touch> touches;
-    [SerializeField] private float movableScreenHeight = 0.7f;
     private Touch touch;
 
     // Start is called before the first frame update
@@ -53,7 +52,6 @@ public class CameraController : MonoBehaviour
                     float mouseInputX = Input.GetAxis("Mouse X");
                     // targetの位置のY軸を中心に、回転（公転）する
                     transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
-
                 }
             }
             else
@@ -67,9 +65,10 @@ public class CameraController : MonoBehaviour
                 //    touch.phase = TouchPhase.Canceled;
                 //}
                 //Touch touch = touches[0];
+                touch.phase = TouchPhase.Ended;
                 for (int i = 0; i < Input.touchCount; i++)
                 {
-                    if (Input.GetTouch(i).position.y > Screen.height * movableScreenHeight || Input.GetTouch(i).fingerId != playerController.GetFingerId())
+                    if (playerController.IsFinger4Move(Input.GetTouch(i).position.y, Input.GetTouch(i).fingerId))
                     {
                         touch = Input.GetTouch(i);
                         touchPos = touch.position;

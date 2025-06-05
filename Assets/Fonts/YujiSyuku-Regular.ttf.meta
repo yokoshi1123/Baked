@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 815e90a170598e44db04b8934c9333e1
+guid: 9e0d02f57399066489886b21d6757514
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Yuji Syuku
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 815e90a170598e44db04b8934c9333e1, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

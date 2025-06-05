@@ -43,7 +43,7 @@ public class LandingChecker : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //Debug.Log(gameObject.name + " : Landed");
-        if (other.CompareTag("Stage") && rb.velocity.y <= 0)
+        if ((other.CompareTag("Stage")||other.CompareTag("Respawn")) && rb.velocity.y <= 0)
         {
             playerController.SetFlipCount(0);
         }

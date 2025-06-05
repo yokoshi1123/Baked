@@ -11,6 +11,11 @@ public class LandingChecker : MonoBehaviour
 
     private Vector3 firstPos;
 
+    private int stayCountCurrent = 0;
+    private int stayCountMax = 60;
+
+    private Vector3 lastPos;
+
     private bool isAbyss = false;
 
     // Start is called before the first frame update
@@ -21,11 +26,28 @@ public class LandingChecker : MonoBehaviour
         bbDateGauge = GameObject.Find("BestBeforeDateGauge").GetComponent<BestBeforeDateGauge>();
 
         firstPos = rb.transform.position;
+        lastPos = rb.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //stayCountMaxフレーム動かなかったら、ジャンプ回復
+        if(rb.transform.position == lastPos)
+        {
+            stayCountCurrent++;
+        }
+        else
+        {
+            stayCountCurrent = 0;
+        }
+
+        if (stayCountCurrent > stayCountMax)
+        {
+            playerController.SetFlipCount(0);
+            stayCountCurrent = 0;
+        }
+        lastPos = rb.transform.position;
         
     }
 

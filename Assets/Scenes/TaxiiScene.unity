@@ -1703,7 +1703,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   rotateSpeed: 10
-  movableScreenHeight: 0.7
 --- !u!81 &456631671
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6293,7 +6292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8439682297006151974, guid: 1a4407f4918efda4a966003f221911f6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8929340638767063969, guid: 1a4407f4918efda4a966003f221911f6, type: 3}
       propertyPath: m_Layer

@@ -811,6 +811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultPackage
       objectReference: {fileID: 0}
+    - target: {fileID: 5807444782703838438, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6146011314612401639, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
       propertyPath: orthographic size
       value: 25

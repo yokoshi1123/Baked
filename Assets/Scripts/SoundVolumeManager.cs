@@ -83,7 +83,12 @@ public class SoundVolumeManager : MonoBehaviour
     {
         return seVolume;
     }
-
-    
-
+    public void SetBGMVolumeSlider()
+    {
+        PlayerPrefs.SetInt("BGMVolumeSlider", (int)(BGMVolumeSlider.value * 100));
+    }
+    public void SetSEVolumeSlider()
+    {
+        PlayerPrefs.SetInt("SEVolumeSlider", (int)(SEVolumeSlider.value * 100));
+    }
 }

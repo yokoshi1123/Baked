@@ -1265,6 +1265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 0
   rotateSpeed: 10
+  cameraSensitivity: 0
 --- !u!1 &2843253037834049880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,6 +3241,18 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 2594093092029726674, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2843253037717688781}
+    - target: {fileID: 2594093092029726674, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCameraSensitivitySlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594093092029726674, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CameraController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3823827172251742610, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3468,6 +3481,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4723459019055813607, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723459019055813607, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4790221438618623182, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3479,6 +3500,18 @@ PrefabInstance:
     - target: {fileID: 5983925236796462440, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1350
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166146002691283728, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166146002691283728, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166146002691283728, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7998433845360347974, guid: af6b4ac5fc921b44c81de0a1255cc466, type: 3}
       propertyPath: m_Pivot.y

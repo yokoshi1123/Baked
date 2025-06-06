@@ -128,7 +128,8 @@ public class PlayerController : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     startPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
-                    Time.timeScale = 0.2f;
+                    //Time.timeScale = 0.2f;
+                    rb.isKinematic = true;
                     buttonDown = true;
                 }
                 else if (buttonDown && touch.phase == TouchPhase.Ended)
@@ -146,7 +147,8 @@ public class PlayerController : MonoBehaviour
                     angle = Mathf.PI * Mathf.Min(32f, 5f * flipDir.magnitude + 12f) / 96f;
                     //Debug.Log("Camera" + Camera.main.transform.rotation.eulerAngles.y);
                     //Debug.Log(startPos + " to " + endPos + ", \nflipDir: " + flipDir + ", magnitude: " + magnitude + ", angle: " + (DEFAULT_SCREEN_HEIGHT / Screen.height));
-                    Time.timeScale = 1f;
+                    //Time.timeScale = 1f;
+                    rb.isKinematic = false;
                     //rb.isKinematic = false;
                     //rb.AddForce(magnitude * Mathf.Cos(angle) * flipDir.normalized, ForceMode.Impulse);
                     //rb.AddForce(magnitude * Mathf.Sin(angle) * Vector3.up, ForceMode.Impulse);

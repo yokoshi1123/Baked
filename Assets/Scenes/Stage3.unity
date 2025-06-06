@@ -906,9 +906,29 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 4.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5147883036536931128, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147883036536931128, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147883036536931128, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5393713132032716015, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
       propertyPath: m_Name
       value: DefaultPackage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012131461279189967, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012131461279189967, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6146011314612401639, guid: dfbf9021f0af11e44a85ea5a865c9126, type: 3}
       propertyPath: orthographic size

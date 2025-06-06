@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using Slider = UnityEngine.UI.Slider;
 
 public class CameraController : MonoBehaviour
 {
@@ -14,12 +16,28 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float rotateSpeed = 10f;
 
+    [SerializeField]
+    private float cameraSensitivity;
+
+    private Slider CameraSensitivitySlider;
+
+    private TextMeshProUGUI cameraSensitivityValue;
+
+    private float defaultRatio;
+
     //private List<Touch> touches;
     private Touch touch;
 
     // Start is called before the first frame update
     void Start()
     {
+        CameraSensitivitySlider = GameObject.Find("CameraSensitivity").GetComponent<Slider>();
+        defaultRatio = CameraSensitivitySlider.GetComponent<SliderStepWidth>().GetDefaultRatio();
+        cameraSensitivityValue = CameraSensitivitySlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        cameraSensitivity = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
+        CameraSensitivitySlider.value = cameraSensitivity * defaultRatio;
+        cameraSensitivityValue.text = cameraSensitivity.ToString("f1");
+
         //player = GameObject.Find("Dice");
         player = GameObject.Find("Player");
         playerPos = player.transform.position;
@@ -40,6 +58,9 @@ public class CameraController : MonoBehaviour
         transform.position += player.transform.position - playerPos;
         playerPos = player.transform.position;
 
+        cameraSensitivity = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
+        cameraSensitivityValue.text = cameraSensitivity.ToString("f1");
+
         if (canMove)
         {
             // マウスの右クリックを押している間
@@ -51,7 +72,8 @@ public class CameraController : MonoBehaviour
                     // マウスの移動量
                     float mouseInputX = Input.GetAxis("Mouse X");
                     // targetの位置のY軸を中心に、回転（公転）する
-                    transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+                    Debug.Log(cameraSensitivity);
+                    transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f * cameraSensitivity);
                 }
             }
             else
@@ -78,7 +100,7 @@ public class CameraController : MonoBehaviour
                 if (touch.phase == TouchPhase.Moved)
                 {
                     // targetの位置のY軸を中心に、回転（公転）する
-                    transform.RotateAround(playerPos, Vector3.up, touch.deltaPosition.x * Time.deltaTime * rotateSpeed);
+                    transform.RotateAround(playerPos, Vector3.up, touch.deltaPosition.x * Time.deltaTime * rotateSpeed * cameraSensitivity);
                 }
             }
         }       
@@ -118,5 +140,9 @@ public class CameraController : MonoBehaviour
     public void SetTouch(Touch value)
     {
         touch = value;
+    }
+    public void SetCameraSensitivitySlider()
+    {
+        PlayerPrefs.SetFloat("CameraSensitivity", (CameraSensitivitySlider.value / defaultRatio));
     }
 }

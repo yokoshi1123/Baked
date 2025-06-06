@@ -611,7 +611,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6251869642178692999}
         m_TargetAssemblyTypeName: ClearWindow, Assembly-CSharp
-        m_MethodName: GotoStageSelect
+        m_MethodName: GoToStageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class ClearWindow : MonoBehaviour
 {
     [SerializeField] private static int STAGE_MAX_NUM = 12;

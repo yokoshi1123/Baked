@@ -910,6 +910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landSE: {fileID: 8300000, guid: 8a72dba9768199546a98820c3c6a4ddb, type: 3}
+  getCoinSE: {fileID: 8300000, guid: 2557bd8858ec1d74f935c7cc20f8fa44, type: 3}
+  checkPointSE: {fileID: 8300000, guid: 68440f6634e55604386d236a295506fc, type: 3}
 --- !u!64 &5068768361146317668
 MeshCollider:
   m_ObjectHideFlags: 0

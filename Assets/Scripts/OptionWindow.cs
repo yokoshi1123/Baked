@@ -40,7 +40,7 @@ public class OptionWindow : MonoBehaviour
     {
         //Time.timeScale = 1;
         Debug.Log("Back to Title");
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("OpeningScene");
     }
 
     public void HowToPlay(bool value)

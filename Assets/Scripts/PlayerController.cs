@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private Touch touch;
 
     private float magnitude;
+    private float angle;
 
     //private TextMeshProUGUI debugMsg;
 
@@ -79,21 +80,24 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log("End: " + Input.mousePosition);
                     //Debug.Log("From " + startPos + " to " + endPos);
 
-                    flipDir = (endPos - startPos) * 5 * (DEFAULT_SCREEN_HEIGHT/Screen.height);
+                    flipDir = (endPos - startPos) * 5; // * (DEFAULT_SCREEN_HEIGHT/Screen.height);
                     //Debug.Log("1:" + flipDir);
                     //flipDir = Quaternion.Euler(20f, 0, 0) * flipDir;
                     //flipDir = Quaternion.Inverse(transform.rotation) * flipDir;
                     flipDir.z = flipDir.y;
                     flipDir.y = 0;
                     flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
-                    magnitude = 0.05f + 0.3f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
+                    //magnitude = 1.2f * (0.2f * flipDir.magnitude + 5f / (1f + Mathf.Exp(-1.5f * (flipDir.magnitude - 3f)))) * Mathf.Sqrt(flipDir.magnitude);
+                    magnitude = 0.1f + 0.6f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
+                    angle = Mathf.PI * Mathf.Min(32f, 5f * flipDir.magnitude + 12f) / 96f;
                     //Debug.Log("Camera" + Camera.main.transform.rotation.eulerAngles.y);
-                    //Debug.Log(startPos + " to " + endPos + ", \nflipDir: " + flipDir + ", magnitude: " + flipDir.magnitude * magnitude);
+                    //Debug.Log(startPos + " to " + endPos + ", \nflipDir: " + flipDir + ", magnitude: " + magnitude + ", angle: " + (DEFAULT_SCREEN_HEIGHT / Screen.height));
                     Time.timeScale = 1f;
                     //rb.isKinematic = false;
-                    rb.AddForce(flipDir * magnitude, ForceMode.Impulse);
-                    //rb.AddForce(flipDir, ForceMode.Impulse);
-                    rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 3f, 16f), ForceMode.Impulse);
+                    //rb.AddForce(magnitude * Mathf.Cos(angle) * flipDir.normalized, ForceMode.Impulse);
+                    //rb.AddForce(magnitude * Mathf.Sin(angle) * Vector3.up, ForceMode.Impulse);
+                    rb.AddForce(flipDir * magnitude * (1 + Mathf.Sin(angle)), ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 3f, 16f) * Mathf.Sin(angle), ForceMode.Impulse);
 
                     if (flipDir.magnitude > 0.01f)
                     {
@@ -133,15 +137,23 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                     endPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
-                    flipDir = (endPos - startPos) * 5;
+                    flipDir = (endPos - startPos) * 5; // * (DEFAULT_SCREEN_HEIGHT / Screen.height);
                     flipDir.z = flipDir.y;
                     flipDir.y = 0;
                     flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
-                    magnitude = 0.05f + 0.3f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
+                    //magnitude = 1.2f * (0.2f * flipDir.magnitude + 5f / (1f + Mathf.Exp(-1.5f * (flipDir.magnitude - 3f)))) * Mathf.Sqrt(flipDir.magnitude);
+                    magnitude = 0.2f + 0.8f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
+                    angle = Mathf.PI * Mathf.Min(32f, 5f * flipDir.magnitude + 12f) / 96f;
+                    //Debug.Log("Camera" + Camera.main.transform.rotation.eulerAngles.y);
+                    //Debug.Log(startPos + " to " + endPos + ", \nflipDir: " + flipDir + ", magnitude: " + magnitude + ", angle: " + (DEFAULT_SCREEN_HEIGHT / Screen.height));
                     Time.timeScale = 1f;
-                    rb.AddForce(flipDir * magnitude, ForceMode.Impulse);
-                    //rb.AddForce(flipDir, ForceMode.Impulse);
-                    rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 4f, 16f), ForceMode.Impulse);
+                    //rb.isKinematic = false;
+                    //rb.AddForce(magnitude * Mathf.Cos(angle) * flipDir.normalized, ForceMode.Impulse);
+                    //rb.AddForce(magnitude * Mathf.Sin(angle) * Vector3.up, ForceMode.Impulse);
+                    //magnitude = 0.05f + 0.3f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
+                    //Time.timeScale = 1f;
+                    rb.AddForce(flipDir * magnitude * (1 + Mathf.Cos(angle)), ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * Mathf.Min(Mathf.Sqrt(flipDir.magnitude) * 3f, 16f), ForceMode.Impulse);
 
                     if (flipDir.magnitude > 0.01f)
                     {

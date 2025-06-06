@@ -20,8 +20,18 @@ public class ClearWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
 
     private ScoreManager scoreManager;
-    
+
+    private SoundVolumeManager soundVolumeManager;
+
+    [Header("ÉSÅ[Éã")][SerializeField] private AudioClip goalSE;
+
     // Start is called before the first frame update
+    void Awake()
+    {
+        soundVolumeManager = GameObject.Find("SoundVolumeManager").GetComponent<SoundVolumeManager>();
+        GetComponent<AudioSource>().PlayOneShot(goalSE, soundVolumeManager.GetSEVolume());
+    }
+
     void Start()
     {
         //if (this.gameObject.name == "ClearWindow")

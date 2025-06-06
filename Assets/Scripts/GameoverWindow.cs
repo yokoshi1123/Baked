@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class GameoverWindow : MonoBehaviour
 {
+    private SoundVolumeManager soundVolumeManager;
+
+    [Header("ゲームオーバー")][SerializeField] private AudioClip gameoverSE;
+    void Awake()
+    {
+        soundVolumeManager = GameObject.Find("SoundVolumeManager").GetComponent<SoundVolumeManager>();
+        GetComponent<AudioSource>().PlayOneShot(gameoverSE, soundVolumeManager.GetSEVolume());
+    }
+
     public void RetryStage()
     {
         Debug.Log("Retry");

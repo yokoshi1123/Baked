@@ -9,6 +9,8 @@ using UnityEngine;
 public class CollisionSE : MonoBehaviour
 {
     [Header("着地")][SerializeField] private AudioClip landSE;
+    [Header("コイン")][SerializeField] private AudioClip getCoinSE;
+    [Header("チェックポイント")][SerializeField] private AudioClip checkPointSE;
     private SoundVolumeManager soundVolumeManager;
     private float seVolume;
 
@@ -28,9 +30,17 @@ public class CollisionSE : MonoBehaviour
     {
         //Debug.Log("着地SE");
 
-        if (!other.CompareTag("Abyss"))
+        if (other.CompareTag("Coin"))
         {
-            GetComponent<AudioSource>().PlayOneShot(landSE,seVolume);
+            GetComponent<AudioSource>().PlayOneShot(getCoinSE, seVolume);
+        }
+        else if (other.CompareTag("Respawn"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(checkPointSE, seVolume);
+        }
+        else if (!other.CompareTag("Abyss"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(landSE, seVolume);
         }
     }
 }

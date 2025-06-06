@@ -8,7 +8,7 @@ public class BestBeforeDateGauge : MonoBehaviour
 {
     private Slider gauge;
     private PlayerController playerController;
-    private GameObject gameoverWindow;
+    [SerializeField] private GameObject gameoverWindow;
     
     [SerializeField] private float gaugeMaxValue;
     [SerializeField] private float gaugeDicreaseSpeed;
@@ -20,8 +20,8 @@ public class BestBeforeDateGauge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameoverWindow = GameObject.Find("GameoverWindow");
-        gameoverWindow.SetActive(false);
+        //gameoverWindow = GameObject.Find("GameoverWindow");
+        //gameoverWindow.SetActive(false);
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         Application.targetFrameRate = 60;

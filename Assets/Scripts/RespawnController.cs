@@ -41,7 +41,7 @@ public class RespawnController : MonoBehaviour
         if (other.CompareTag("Abyss")) // —Ž‚¿‚½‚çƒŠƒZƒbƒg
         {
             Respawn();
-            Debug.Log("Fell");
+            //Debug.Log("Fell");
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 

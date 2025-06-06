@@ -19,42 +19,60 @@ public class SoundVolumeManager : MonoBehaviour
     private TextMeshProUGUI BGMValue;
     private TextMeshProUGUI SEValue;
 
+    private AudioSource bgmManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        BGMVolumeSlider = GameObject.Find("BGMVolume").GetComponent<Slider>();
-        SEVolumeSlider = GameObject.Find("SEVolume").GetComponent<Slider>();
+        bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 100);
+        seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 100);
+        try 
+        {
+            bgmManager = GameObject.Find("BGMManager").GetComponent<AudioSource>();
 
-        bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 80);
-        seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 80);
-        BGMVolumeSlider.value = bgmVolume * 0.01f;
-        SEVolumeSlider.value = seVolume * 0.01f;
+            BGMVolumeSlider = GameObject.Find("BGMVolume").GetComponent<Slider>();
+            SEVolumeSlider = GameObject.Find("SEVolume").GetComponent<Slider>();
 
-        BGMValue = BGMVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
-        SEValue = SEVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+            BGMVolumeSlider.value = bgmVolume * 0.01f;
+            SEVolumeSlider.value = seVolume * 0.01f;
 
-        BGMValue.text = bgmVolume.ToString();
-        SEValue.text = seVolume.ToString();
+            BGMValue = BGMVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+            SEValue = SEVolumeSlider.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+
+            BGMValue.text = bgmVolume.ToString();
+            SEValue.text = seVolume.ToString();
+        }
+        catch
+        {
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 80);
-        seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 80);
+        if (BGMVolumeSlider != null && SEVolumeSlider != null)
+        {
+            bgmVolume = PlayerPrefs.GetInt("BGMVolumeSlider", 100);
+            seVolume = PlayerPrefs.GetInt("SEVolumeSlider", 100);
 
-        BGMValue.text = bgmVolume.ToString();
-        SEValue.text = seVolume.ToString();
+            BGMValue.text = bgmVolume.ToString();
+            SEValue.text = seVolume.ToString();
+        }
+        if (bgmManager != null)
+        {
+            bgmManager.volume = bgmVolume * 0.01f;
+        }
     }
 
-    public void SetBGMVolumeSlider()
-    {
-        PlayerPrefs.SetInt("BGMVolumeSlider", (int)(BGMVolumeSlider.value * 100));
-    }
-    public void SetSEVolumeSlider()
-    {
-        PlayerPrefs.SetInt("SEVolumeSlider", (int)(SEVolumeSlider.value * 100));
-    }
+    //public void SetBGMVolumeSlider()
+    //{
+    //    PlayerPrefs.SetInt("BGMVolumeSlider", (int)(BGMVolumeSlider.value * 100));
+    //}
+    //public void SetSEVolumeSlider()
+    //{
+    //    PlayerPrefs.SetInt("SEVolumeSlider", (int)(SEVolumeSlider.value * 100));
+    //}
 
     public int GetBGMVolume()
     {

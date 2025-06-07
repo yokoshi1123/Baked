@@ -88,8 +88,10 @@ public class ClearWindow : MonoBehaviour
     {
         Time.timeScale = 1;
         Debug.Log("Next Stage");
-        /*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
-        SceneManager.LoadScene("Stage" + stageUnlock);
+        ///*int*/ stageUnlock = PlayerPrefs.GetInt("StageUnlock", 1);
+        ///
+        //SceneManager.LoadScene("Stage" + stageUnlock);
+        SceneManager.LoadScene("Stage" + (int.Parse(SceneManager.GetActiveScene().name.Replace("Stage", "")) + 1));
     }
 
     public void RetryStage()

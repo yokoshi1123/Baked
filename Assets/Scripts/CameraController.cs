@@ -90,7 +90,7 @@ public class CameraController : MonoBehaviour
                 touch.phase = TouchPhase.Ended;
                 for (int i = 0; i < Input.touchCount; i++)
                 {
-                    if (playerController.IsFinger4Move(Input.GetTouch(i).position.y, Input.GetTouch(i).fingerId))
+                    if (playerController.IsFinger4Camera(Input.GetTouch(i).position.y, Input.GetTouch(i).fingerId))
                     {
                         touch = Input.GetTouch(i);
                         touchPos = touch.position;

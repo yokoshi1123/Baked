@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
     private float DEFAULT_SCREEN_HEIGHT = 1778;
 
+    private float MAX_MAGNITUDE = 6f;
+
     void Start()
     {
         rb = /*transform.GetChild(0).*/GetComponent<Rigidbody>();
@@ -64,8 +66,10 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0) && touchPos.y < Screen.height * movableScreenHeight)
                 {
                     //Debug.Log("From " + Input.mousePosition);
-                    startPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
-                    Time.timeScale = 0.2f;
+                    //startPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                    startPos = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * new Vector3(Input.mousePosition.x / Screen.width, 0, Input.mousePosition.y / Screen.height); // - transform.position;
+                    //Time.timeScale = 0.2f;
+                    //rb.isKinematic = true;
                     buttonDown = true;
                 }
 
@@ -76,23 +80,25 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                     //rb.angularVelocity = Vector3.zero;
-                    endPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                    //endPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(Input.mousePosition.x, Input.mousePosition.y, cameraDepth)) - transform.position;
+                    endPos = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * new Vector3(Input.mousePosition.x / Screen.width, 0, Input.mousePosition.y / Screen.height);
                     //Debug.Log("End: " + Input.mousePosition);
                     //Debug.Log("From " + startPos + " to " + endPos);
 
-                    flipDir = (endPos - startPos) * 5; // * (DEFAULT_SCREEN_HEIGHT/Screen.height);
+                    flipDir = (endPos - startPos) * MAX_MAGNITUDE; // * (DEFAULT_SCREEN_HEIGHT/Screen.height);
                     //Debug.Log("1:" + flipDir);
                     //flipDir = Quaternion.Euler(20f, 0, 0) * flipDir;
                     //flipDir = Quaternion.Inverse(transform.rotation) * flipDir;
-                    flipDir.z = flipDir.y;
-                    flipDir.y = 0;
-                    flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
+                    //flipDir.z = flipDir.y;
+                    //flipDir.y = 0;
+                    //flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
                     //magnitude = 1.2f * (0.2f * flipDir.magnitude + 5f / (1f + Mathf.Exp(-1.5f * (flipDir.magnitude - 3f)))) * Mathf.Sqrt(flipDir.magnitude);
                     magnitude = 0.1f + 0.6f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
                     angle = Mathf.PI * Mathf.Min(32f, 5f * flipDir.magnitude + 12f) / 96f;
                     //Debug.Log("Camera" + Camera.main.transform.rotation.eulerAngles.y);
                     //Debug.Log(startPos + " to " + endPos + ", \nflipDir: " + flipDir + ", magnitude: " + magnitude + ", angle: " + (DEFAULT_SCREEN_HEIGHT / Screen.height));
-                    Time.timeScale = 1f;
+                    //Time.timeScale = 1f;
+                    //rb.isKinematic = true;
                     //rb.isKinematic = false;
                     //rb.AddForce(magnitude * Mathf.Cos(angle) * flipDir.normalized, ForceMode.Impulse);
                     //rb.AddForce(magnitude * Mathf.Sin(angle) * Vector3.up, ForceMode.Impulse);
@@ -125,11 +131,12 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
-                if (touch.phase == TouchPhase.Began)
+                if (!buttonDown && touch.phase == TouchPhase.Began)
                 {
-                    startPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
+                    //startPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
+                    startPos = /*Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * */new Vector3(touchPos.x / Screen.width, 0, touchPos.y / Screen.height); // - transform.position;
                     //Time.timeScale = 0.2f;
-                    rb.isKinematic = true;
+                    //rb.isKinematic = true;
                     buttonDown = true;
                 }
                 else if (buttonDown && touch.phase == TouchPhase.Ended)
@@ -137,11 +144,12 @@ public class PlayerController : MonoBehaviour
                     buttonDown = false;
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
-                    endPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
-                    flipDir = (endPos - startPos) * 5; // * (DEFAULT_SCREEN_HEIGHT / Screen.height);
-                    flipDir.z = flipDir.y;
-                    flipDir.y = 0;
-                    flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
+                    //endPos = /*Quaternion.Euler(0, -Camera.main.transform.rotation.eulerAngles.y, 0)*/ Quaternion.Inverse(Camera.main.transform.rotation) * Camera.main.ScreenToWorldPoint(new(touchPos.x, touchPos.y, cameraDepth)) - transform.position;
+                    endPos = /*Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) **/ new Vector3(touchPos.x / Screen.width, 0, touchPos.y / Screen.height); // - transform.position;
+                    flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * (endPos - startPos) * MAX_MAGNITUDE; // * (DEFAULT_SCREEN_HEIGHT / Screen.height);
+                    //flipDir.z = flipDir.y;
+                    //flipDir.y = 0;
+                    //flipDir = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * flipDir;
                     //magnitude = 1.2f * (0.2f * flipDir.magnitude + 5f / (1f + Mathf.Exp(-1.5f * (flipDir.magnitude - 3f)))) * Mathf.Sqrt(flipDir.magnitude);
                     magnitude = 0.2f + 0.8f / (1 + Mathf.Exp(-0.8f * (flipDir.magnitude - 5f)));
                     angle = Mathf.PI * Mathf.Min(32f, 5f * flipDir.magnitude + 12f) / 96f;
@@ -223,7 +231,7 @@ public class PlayerController : MonoBehaviour
     //    touches.Remove(touch);
     //}
 
-    public bool IsFinger4Move(float posY, int id)
+    public bool IsFinger4Camera(float posY, int id)
     {
         return (posY > Screen.height * movableScreenHeight && id != touch.fingerId);
     }
